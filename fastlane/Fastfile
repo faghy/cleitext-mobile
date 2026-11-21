@@ -31,12 +31,90 @@ platform :ios do
       screenshots_path: File.expand_path('screenshots', __dir__),
       overwrite_screenshots: true,
       app_rating_config_path: File.expand_path('age_rating.json', __dir__),
-      price_tier: 0,
       skip_binary_upload: true,
       submit_for_review: false,
       automatic_release: false,
       run_precheck_before_submit: false,
       force: true
     )
+    free_everywhere
+  end
+
+  # Price "Free" and availability in every territory, with the current App Store
+  # Connect API (deliver's price tier uses one Apple retired). Only when unset.
+  private_lane :free_everywhere do
+    require 'json'
+    require 'net/http'
+    token = Spaceship::ConnectAPI::Token.from(filepath: ENV.fetch('ASC_KEY_JSON'))
+    call = lambda do |method, path, body = nil|
+      uri = URI("https://api.appstoreconnect.apple.com#{path}")
+      request = (method == :get ? Net::HTTP::Get : Net::HTTP::Post).new(uri)
+      request['Authorization'] = "Bearer #{token.text}"
+      request['Content-Type'] = 'application/json'
+      request.body = JSON.generate(body) if body
+      response = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(request) }
+      data = response.body.to_s.empty? ? {} : JSON.parse(response.body)
+      UI.user_error!("#{method.upcase} #{path}: #{response.code} #{data['errors']&.map { |e| e['detail'] }&.join('; ')}") if response.code.to_i >= 400 && response.code.to_i != 404
+      [response.code.to_i, data]
+    end
+
+    app = call.call(:get, '/v1/apps?filter[bundleId]=com.cleitext.app')[1]['data'].first
+    app_id = app['id']
+
+    status, schedule = call.call(:get, "/v1/apps/#{app_id}/appPriceSchedule?include=manualPrices")
+    if status == 200 && schedule.dig('data', 'relationships', 'manualPrices', 'data')&.any?
+      UI.message('The app already has a price: left as it is.')
+    else
+      points = call.call(:get, "/v1/apps/#{app_id}/appPricePoints?filter[territory]=USA&limit=200")[1]['data']
+      free = points.find { |p| p.dig('attributes', 'customerPrice').to_f.zero? }
+      UI.user_error!('No free price point found') unless free
+      call.call(:post, '/v1/appPriceSchedules', {
+        data: {
+          type: 'appPriceSchedules',
+          relationships: {
+            app: { data: { type: 'apps', id: app_id } },
+            baseTerritory: { data: { type: 'territories', id: 'USA' } },
+            manualPrices: { data: [{ type: 'appPrices', id: '${free}' }] }
+          }
+        },
+        included: [{
+          type: 'appPrices', id: '${free}',
+          attributes: { startDate: nil },
+          relationships: { appPricePoint: { data: { type: 'appPricePoints', id: free['id'] } } }
+        }]
+      })
+      UI.success('Price set: Free.')
+    end
+
+    status, availability = call.call(:get, "/v1/apps/#{app_id}/appAvailabilityV2")
+    if status == 200 && availability['data']
+      UI.message('The app already has its availability: left as it is.')
+    else
+      territories = []
+      path = '/v1/territories?limit=200'
+      while path
+        page = call.call(:get, path)[1]
+        territories.concat(page['data'].map { |t| t['id'] })
+        path = page.dig('links', 'next')&.sub('https://api.appstoreconnect.apple.com', '')
+      end
+      call.call(:post, '/v2/appAvailabilities', {
+        data: {
+          type: 'appAvailabilities',
+          attributes: { availableInNewTerritories: true },
+          relationships: {
+            app: { data: { type: 'apps', id: app_id } },
+            territoryAvailabilities: { data: territories.map { |t| { type: 'territoryAvailabilities', id: "${#{t}}" } } }
+          }
+        },
+        included: territories.map do |t|
+          {
+            type: 'territoryAvailabilities', id: "${#{t}}",
+            attributes: { available: true },
+            relationships: { territory: { data: { type: 'territories', id: t } } }
+          }
+        end
+      })
+      UI.success("Available in #{territories.size} territories.")
+    end
   end
 end
