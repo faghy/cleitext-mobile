@@ -1,0 +1,43 @@
+# App Store listing for Cleitext (see .github/workflows/ios-metadata.yml).
+opt_out_usage
+
+require 'deliver'
+
+# Apple needs a contact phone before the review information exists; until it
+# is set (secret APP_REVIEW_CONTACT_PHONE), deliver's review attachment step
+# finds no review detail: skip it instead of stopping the whole upload.
+module Deliver
+  class UploadMetadata
+    alias_method :cleitext_review_attachment_file, :review_attachment_file
+    def review_attachment_file(version)
+      cleitext_review_attachment_file(version)
+    rescue RuntimeError => e
+      raise unless e.message == 'No data'
+      UI.important('No App Review information on App Store Connect yet (it needs a contact phone): skipped.')
+    end
+  end
+end
+
+default_platform(:ios)
+
+platform :ios do
+  desc 'Upload texts, URLs, categories, screenshots, age rating and review notes; never a binary, never a submission'
+  lane :listing do
+    deliver(
+      api_key_path: ENV.fetch('ASC_KEY_JSON'),
+      app_identifier: 'com.cleitext.app',
+      platform: 'ios',
+      app_version: '1.0.0',
+      metadata_path: ENV.fetch('LISTING_METADATA'),
+      screenshots_path: File.expand_path('screenshots', __dir__),
+      overwrite_screenshots: true,
+      app_rating_config_path: File.expand_path('age_rating.json', __dir__),
+      price_tier: 0,
+      skip_binary_upload: true,
+      submit_for_review: false,
+      automatic_release: false,
+      run_precheck_before_submit: false,
+      force: true
+    )
+  end
+end

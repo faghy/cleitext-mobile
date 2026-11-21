@@ -52,22 +52,12 @@ jobs:
           find "$META" -type f | sort
 
       - name: Deliver
-        run: |
-          fastlane deliver \
-            --api_key_path "$RUNNER_TEMP/asc_key.json" \
-            --app_identifier com.cleitext.app \
-            --platform ios \
-            --app_version 1.0.0 \
-            --metadata_path "$RUNNER_TEMP/metadata" \
-            --screenshots_path fastlane/screenshots \
-            --overwrite_screenshots true \
-            --app_rating_config_path fastlane/age_rating.json \
-            --price_tier 0 \
-            --skip_binary_upload true \
-            --submit_for_review false \
-            --automatic_release false \
-            --run_precheck_before_submit false \
-            --force true
+        env:
+          ASC_KEY_JSON: ${{ runner.temp }}/asc_key.json
+          LISTING_METADATA: ${{ runner.temp }}/metadata
+          FASTLANE_OPT_OUT_USAGE: 'YES'
+          FASTLANE_SKIP_UPDATE_CHECK: 'YES'
+        run: fastlane ios listing
 
       - name: Remove the key
         if: always()
