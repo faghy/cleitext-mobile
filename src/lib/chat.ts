@@ -15,7 +15,23 @@ export type ChatEvent =
   | { type: 'text'; text: string }
   | { type: 'done'; messages: ChatHistoryMessage[] }
   | { type: 'error'; message: string; [key: string]: unknown }
+  /** Chriss base (the free AI): the request is on its way, read slowly. */
+  | { type: 'reading' }
+  /** Chriss base: the request waits its turn, with `position` requests ahead of it (core 0.117.1). */
+  | { type: 'queue'; position: number }
+  /** Chriss base: the free requests left today. */
+  | { type: 'quota'; remaining: number; limit: number | null; resetAt: string | null }
   | { type: 'ping' };
+
+/**
+ * The requests ahead of this one at the free service, after an event: set
+ * by `queue`, kept by `ping`, gone with anything else (its turn came).
+ */
+export function queueAfter(current: number | null, event: ChatEvent): number | null {
+  if (event.type === 'queue')
+    return typeof event.position === 'number' && event.position > 0 ? event.position : null;
+  return event.type === 'ping' ? current : null;
+}
 
 export type ChatProblem =
   /** No AI service connected to the site (Admin → Chriss → Settings). */

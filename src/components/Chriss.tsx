@@ -2,7 +2,7 @@ import { Clipboard } from '@capacitor/clipboard';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { locale, t } from '../i18n';
 import { registry } from '../lib/app';
-import { askChriss, type ChatHistoryMessage, type ChatProblem } from '../lib/chat';
+import { askChriss, queueAfter, type ChatHistoryMessage, type ChatProblem } from '../lib/chat';
 import { adminUrl, isNative, openInBrowser } from '../lib/native';
 import type { Site } from '../lib/sites';
 import { Icon } from './icons';
@@ -97,6 +97,8 @@ export function ChrissSheet({ site, onClose }: { site: Site; onClose: () => void
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
   const [tool, setTool] = useState<string | null>(null);
+  // Chriss base: the requests ahead of this one at the free service.
+  const [queue, setQueue] = useState<number | null>(null);
   const end = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -121,6 +123,7 @@ export function ChrissSheet({ site, onClose }: { site: Site; onClose: () => void
     const result = await askChriss(registry.api(site), before.history, text, (event) => {
       if (event.type === 'tool') setTool(event.name);
       if (event.type === 'tool-done') setTool(null);
+      setQueue((current) => queueAfter(current, event));
     });
     setState((current) => ({
       history: result.messages ?? current.history,
@@ -133,6 +136,7 @@ export function ChrissSheet({ site, onClose }: { site: Site; onClose: () => void
     }));
     setBusy(false);
     setTool(null);
+    setQueue(null);
   };
 
   const copy = async (text: string) => {
@@ -218,7 +222,13 @@ export function ChrissSheet({ site, onClose }: { site: Site; onClose: () => void
                 <i />
                 <i />
               </span>
-              <span>{tool ? `${t('chriss.working')} (${tool})` : t('chriss.working')}</span>
+              <span>
+                {tool
+                  ? `${t('chriss.working')} (${tool})`
+                  : queue
+                    ? t('chriss.queue', { count: queue })
+                    : t('chriss.working')}
+              </span>
             </div>
           </div>
         )}

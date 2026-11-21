@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { ApiClient } from './api';
-import { askChriss, findQuota, lineParser, problemOf, type ChatEvent } from './chat';
+import { askChriss, findQuota, lineParser, problemOf, queueAfter, type ChatEvent } from './chat';
 
 function api(response: Response) {
   const fetchImpl = vi.fn(async (_url: string, _init?: RequestInit) => response);
@@ -109,6 +109,29 @@ describe('askChriss', () => {
     expect(JSON.parse(init!.body as string)).toEqual({
       messages: [...history, { role: 'user', content: 'Scrivi una bozza' }],
     });
+  });
+
+  it('passes on the place in the queue of the free service', async () => {
+    const { client } = api(
+      stream([
+        '{"type":"reading"}',
+        '{"type":"queue","position":2}',
+        '{"type":"ping"}',
+        '{"type":"queue","position":1}',
+        '{"type":"quota","remaining":19,"limit":20,"resetAt":"2026-11-22T00:00:00Z"}',
+        '{"type":"text","text":"Ciao!"}',
+        JSON.stringify({ type: 'done', messages: [] }),
+      ]),
+    );
+    let queue: number | null = null;
+    const seen: (number | null)[] = [];
+    const result = await askChriss(client, [], 'ciao', (event) => {
+      queue = queueAfter(queue, event);
+      seen.push(queue);
+    });
+    expect(result.text).toBe('Ciao!');
+    expect(seen).toEqual([null, 2, 2, 1, null, null, null]);
+    expect(queueAfter(3, { type: 'queue', position: 0 })).toBeNull();
   });
 
   it('reports an error event in the stream', async () => {
