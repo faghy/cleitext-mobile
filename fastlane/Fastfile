@@ -2,21 +2,20 @@
 opt_out_usage
 
 require 'deliver'
+require 'deliver/upload_metadata'
 
 # Apple needs a contact phone before the review information exists; until it
 # is set (secret APP_REVIEW_CONTACT_PHONE), deliver's review attachment step
 # finds no review detail: skip it instead of stopping the whole upload.
-module Deliver
-  class UploadMetadata
-    alias_method :cleitext_review_attachment_file, :review_attachment_file
-    def review_attachment_file(version)
-      cleitext_review_attachment_file(version)
-    rescue RuntimeError => e
-      raise unless e.message == 'No data'
-      UI.important('No App Review information on App Store Connect yet (it needs a contact phone): skipped.')
-    end
+module CleitextReviewAttachment
+  def review_attachment_file(version)
+    super
+  rescue RuntimeError => e
+    raise unless e.message == 'No data'
+    UI.important('No App Review information on App Store Connect yet (it needs a contact phone): skipped.')
   end
 end
+::Deliver::UploadMetadata.prepend(CleitextReviewAttachment)
 
 default_platform(:ios)
 
