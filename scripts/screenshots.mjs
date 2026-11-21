@@ -289,3 +289,4 @@ try {
   server.kill();
 }
 console.log(written.join('\n'));
+process.exit(0);
