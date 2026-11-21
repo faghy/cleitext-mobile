@@ -32,6 +32,8 @@ jobs:
           ruby -rjson -e 'puts JSON.generate({key_id: ENV["KEY_ID"], issuer_id: ENV["ISSUER"], key: ENV["KEY_P8"], is_key_content_base64: true, in_house: false})' > "$RUNNER_TEMP/asc_key.json"
 
       - name: Listing files (iOS only)
+        env:
+          REVIEW_PHONE: ${{ secrets.APP_REVIEW_CONTACT_PHONE }}
         run: |
           META="$RUNNER_TEMP/metadata"
           mkdir -p "$META"
@@ -39,6 +41,14 @@ jobs:
           cp fastlane/metadata/*.txt "$META/"
           # "What's New" is not accepted on the first version.
           rm -f "$META"/*/release_notes.txt
+          # Apple requires a contact phone with the review information: kept in a
+          # secret, never in the repository. Without it the review notes are skipped.
+          if [ -n "$REVIEW_PHONE" ]; then
+            printf '%s' "$REVIEW_PHONE" > "$META/review_information/phone_number.txt"
+          else
+            echo "No APP_REVIEW_CONTACT_PHONE secret: review information not uploaded."
+            rm -rf "$META/review_information"
+          fi
           find "$META" -type f | sort
 
       - name: Deliver
