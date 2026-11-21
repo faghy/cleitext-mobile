@@ -271,7 +271,7 @@ try {
         await page.evaluate(
           () => document.activeElement instanceof HTMLElement && document.activeElement.blur(),
         );
-        const n = index + 1;
+        const n = String(index + 1).padStart(2, '0');
         const file =
           device.store === 'ios'
             ? `fastlane/screenshots/${dirs.ios}/${n}_${deviceName}_${name}.png`

@@ -1,0 +1,64 @@
+name: iOS store listing
+
+# Uploads the App Store listing (texts, URLs, categories, screenshots, age
+# rating, review notes) with fastlane deliver. Never uploads a binary and
+# never submits for review.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deliver:
+    name: Upload the App Store listing
+    runs-on: ubuntu-latest
+    env:
+      KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      ISSUER: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      KEY_P8: ${{ secrets.APP_STORE_CONNECT_KEY_P8 }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+      - name: Install fastlane
+        run: gem install fastlane --no-document && fastlane --version
+
+      - name: API key
+        run: |
+          umask 077
+          ruby -rjson -e 'puts JSON.generate({key_id: ENV["KEY_ID"], issuer_id: ENV["ISSUER"], key: ENV["KEY_P8"], is_key_content_base64: true, in_house: false})' > "$RUNNER_TEMP/asc_key.json"
+
+      - name: Listing files (iOS only)
+        run: |
+          META="$RUNNER_TEMP/metadata"
+          mkdir -p "$META"
+          cp -R fastlane/metadata/it fastlane/metadata/en-US fastlane/metadata/review_information "$META/"
+          cp fastlane/metadata/*.txt "$META/"
+          # "What's New" is not accepted on the first version.
+          rm -f "$META"/*/release_notes.txt
+          find "$META" -type f | sort
+
+      - name: Deliver
+        run: |
+          fastlane deliver \
+            --api_key_path "$RUNNER_TEMP/asc_key.json" \
+            --app_identifier com.cleitext.app \
+            --platform ios \
+            --app_version 1.0.0 \
+            --metadata_path "$RUNNER_TEMP/metadata" \
+            --screenshots_path fastlane/screenshots \
+            --overwrite_screenshots true \
+            --app_rating_config_path fastlane/age_rating.json \
+            --price_tier 0 \
+            --skip_binary_upload true \
+            --submit_for_review false \
+            --automatic_release false \
+            --run_precheck_before_submit false \
+            --force true
+
+      - name: Remove the key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/asc_key.json"

@@ -18,6 +18,10 @@ build 1) ai due store: risposte ai questionari, note per la revisione e passaggi
 | Copyright            | 2026 Serafino Christian                                                                  |
 | Prezzo               | Gratis, senza acquisti in-app                                                            |
 
+La scheda App Store (testi, URL, categorie, screenshot, classificazione, note per la revisione)
+si carica con il workflow **iOS store listing** (`ios-metadata.yml`, avvio manuale): non carica
+binari e non invia alla revisione.
+
 Testi e immagini: `fastlane/metadata/` (Android `android/it-IT`, `android/en-US`; iOS `it`, `en-US`),
 screenshot iPhone in `fastlane/screenshots/<lingua>/` (6,9" 1320×2868 e 6,5" 1284×2778),
 screenshot Android, icona 512×512 e immagine in evidenza 1024×500 in
@@ -132,9 +136,8 @@ Testo per «Informazioni per l'accesso» (App Store Connect → Revisione app):
 > sign in with the username and password below and tap "Allow". You are back in the app with
 > the site's dashboard (comments, messages, orders, write, media).
 >
-> Site address: **TODO (es. demo.cleitext.com)**
-> Username: **TODO**
-> Password: **TODO**
+> Site address: **demo.cleitext.com**
+> Username / Password: nei campi «Accesso richiesto» di App Store Connect (mai nel repository)
 
 Per Google Play: Contenuti dell'app → Accesso all'app → «Tutte o alcune funzionalità sono
 limitate», con le stesse istruzioni e credenziali.
