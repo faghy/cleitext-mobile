@@ -20,5 +20,6 @@
   "userGeneratedContent": false,
   "advertising": false,
   "gunsOrOtherWeapons": "NONE",
-  "lootBox": false
+  "lootBox": false,
+  "socialMedia": false
 }
