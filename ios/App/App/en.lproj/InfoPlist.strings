@@ -1,0 +1,4 @@
+/* Permission texts shown by iOS (English). */
+"NSCameraUsageDescription" = "Cleitext uses the camera to take photos to add to your site, for example in a post or in the media library.";
+"NSPhotoLibraryUsageDescription" = "Cleitext opens your photos so you can choose which ones to upload to your site.";
+"NSPhotoLibraryAddUsageDescription" = "Cleitext can save photos you take to your library.";

@@ -1,0 +1,2 @@
+patchedDependencies:
+  '@capacitor-firebase/messaging@7.5.0': patches/@capacitor-firebase__messaging@7.5.0.patch

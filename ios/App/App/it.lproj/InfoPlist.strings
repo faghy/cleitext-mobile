@@ -1,0 +1,4 @@
+/* Testi dei permessi mostrati da iOS (italiano). */
+"NSCameraUsageDescription" = "Cleitext usa la fotocamera per scattare foto da aggiungere al tuo sito, per esempio in un articolo o nella libreria media.";
+"NSPhotoLibraryUsageDescription" = "Cleitext apre le tue foto perché tu possa scegliere quali caricare sul tuo sito.";
+"NSPhotoLibraryAddUsageDescription" = "Cleitext può salvare nella tua libreria le foto che scatti.";

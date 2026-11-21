@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+android
+ios
+fastlane/screenshots
+fastlane/metadata
+pnpm-lock.yaml
+src/licenses.txt

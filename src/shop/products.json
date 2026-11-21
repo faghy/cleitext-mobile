@@ -1,0 +1,118 @@
+{
+  "updated": "2026-11-21",
+  "vat": 22,
+  "products": [
+    {
+      "slug": "vitality",
+      "name": "Vitality",
+      "kind": "theme",
+      "icon": "products/vitality.svg",
+      "page": "https://cleitext.com/themes/vitality",
+      "summary": {
+        "it": "Tema per aziende e professionisti: slider, servizi, portfolio, prezzi, team e blog, con un costruttore di layout e un pannello per colori, caratteri e menu.",
+        "en": "A theme for businesses and professionals: sliders, services, portfolio, pricing, team and blog, with a layout builder and a panel for colors, fonts and menus."
+      },
+      "plans": [{ "id": "01a1f095-0ad6-715b-a9dc-6862a625061e", "price": 59, "sites": 1 }]
+    },
+    {
+      "slug": "zenit-pro",
+      "name": "Zenit Pro",
+      "kind": "plugin",
+      "icon": "products/zenit-pro.svg",
+      "page": "https://cleitext.com/themes/zenit#pro",
+      "summary": {
+        "it": "Tutto per il tema Zenit: intestazione fissa, mega menu, intestazioni e piè di pagina su misura, layout del blog e pagine con regole di visualizzazione.",
+        "en": "Everything for the Zenit theme: sticky header, mega menu, custom headers and footers, blog layouts and pages with display rules."
+      },
+      "plans": [{ "id": "01a1f095-12ca-7487-8fc3-3d230bfebd4b", "price": 59, "sites": 1 }]
+    },
+    {
+      "slug": "fresco-pro",
+      "name": "Fresco Pro",
+      "kind": "plugin",
+      "icon": "products/fresco-pro.svg",
+      "page": "https://cleitext.com/plugins/fresco-pro",
+      "summary": {
+        "it": "Tutto per Fresco: intestazioni, piè di pagina, archivi e popup su misura, moduli, contenuti dinamici, oltre 40 widget ed effetti di movimento.",
+        "en": "Everything for Fresco: custom headers, footers, archives and popups, forms, dynamic content, over 40 widgets and motion effects."
+      },
+      "plans": [{ "id": "01a1f095-0d46-7062-a1fc-4b593e67c74a", "price": 67, "sites": 1 }]
+    },
+    {
+      "slug": "multilingual-pro",
+      "name": "Multilingual Pro",
+      "kind": "plugin",
+      "icon": "products/multilingual-pro.svg",
+      "page": "https://cleitext.com/plugins/multilingual-pro",
+      "summary": {
+        "it": "Quante lingue vuoi, traduzione automatica con DeepL e un dominio per lingua. Se la licenza scade, lingue e impostazioni continuano a funzionare.",
+        "en": "As many languages as you need, automatic translation with DeepL and a domain per language. If the license ends, languages and settings keep working."
+      },
+      "plans": [{ "id": "01a1f095-1040-738e-b95f-3e53602b21cc", "price": 59, "sites": 1 }]
+    },
+    {
+      "slug": "campus",
+      "name": "Campus",
+      "kind": "plugin",
+      "icon": "products/campus.svg",
+      "page": "https://cleitext.com/plugins/campus",
+      "summary": {
+        "it": "Campi personalizzati senza codice: costruttore visuale, ripetitori, gallerie, mappe, relazioni, pagine di opzioni e blocchi fatti di campi.",
+        "en": "Custom fields without code: a visual builder, repeaters, galleries, maps, relations, options pages and blocks made of fields."
+      },
+      "plans": [
+        { "id": "01a1f095-1e94-70cf-8478-47251e56841a", "price": 29, "sites": 1 },
+        { "id": "01a1f095-213c-749d-9e73-7b789ce8c0d4", "price": 99, "sites": 10 },
+        { "id": "01a1f095-2378-7128-a71e-14779c25e47a", "price": 190, "sites": 0 }
+      ]
+    },
+    {
+      "slug": "diorama-pro",
+      "name": "Diorama Pro",
+      "kind": "plugin",
+      "icon": "products/diorama-pro.svg",
+      "page": "https://cleitext.com/plugins/diorama-pro",
+      "summary": {
+        "it": "Slider senza limiti: caroselli anche in 3D, popup, linea del tempo con testo animato, parallasse, 32 transizioni e dieci modelli pronti.",
+        "en": "Unlimited sliders: carousels also in 3D, popups, a timeline with animated text, parallax, 32 transitions and ten ready-made templates."
+      },
+      "plans": [{ "id": "01a1f095-1739-76bf-b4b9-a04a031d46cb", "price": 49, "sites": 1 }]
+    },
+    {
+      "slug": "tell-me-more",
+      "name": "Tell me more",
+      "kind": "plugin",
+      "icon": "products/tell-me-more.svg",
+      "page": "https://cleitext.com/plugins/tell-me-more",
+      "summary": {
+        "it": "Articoli per argomento dai canali video e dai blog che segui: l’IA del sito scrive bozze originali che pubblichi solo quando vuoi tu.",
+        "en": "Articles by topic from the video channels and blogs you follow: the site’s AI writes original drafts that you publish only when you want."
+      },
+      "plans": [{ "id": "01a1f095-199e-737c-ad7a-26aa18d42422", "price": 49, "sites": 1 }]
+    },
+    {
+      "slug": "setax",
+      "name": "Setax",
+      "kind": "plugin",
+      "icon": "products/setax.svg",
+      "page": "https://cleitext.com/plugins/setax",
+      "summary": {
+        "it": "Filtri per tipo e per zona incrociati tra loro, con una pagina per ogni scelta pronta per i motori di ricerca.",
+        "en": "Filters by kind and by area, crossed with each other, with a page for every choice ready for search engines."
+      },
+      "plans": [{ "id": "01a1f095-25c1-73ac-b991-30ac02aea4f4", "price": 99, "sites": 1 }]
+    },
+    {
+      "slug": "sigyl",
+      "name": "Sigyl",
+      "kind": "plugin",
+      "icon": "products/sigyl.svg",
+      "page": "https://cleitext.com/plugins/sigyl",
+      "summary": {
+        "it": "Chiavi di licenza per il negozio del tuo sito: vendi software, corsi o servizi con una chiave consegnata dopo il pagamento.",
+        "en": "License keys for your site’s shop: sell software, courses or services with a key delivered after payment."
+      },
+      "plans": [{ "id": "01a1f095-28dc-7132-893d-0a98630b0f3e", "price": 99, "sites": 1 }]
+    }
+  ]
+}

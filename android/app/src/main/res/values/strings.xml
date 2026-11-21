@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cleitext</string>
+    <string name="title_activity_main">Cleitext</string>
+    <string name="package_name">com.cleitext.app</string>
+    <string name="custom_url_scheme">com.cleitext.app</string>
+</resources>

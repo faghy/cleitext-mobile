@@ -1,0 +1,25 @@
+node_modules
+dist
+coverage
+.DS_Store
+*.log
+# Signing material never lives in the repository.
+*.p12
+*.jks
+*.keystore
+*.p8
+*.mobileprovision
+keystore.properties
+# Firebase files are injected by CI from secrets.
+android/app/google-services.json
+ios/App/App/GoogleService-Info.plist
+# Native build outputs
+android/.gradle
+android/build
+android/app/build
+android/app/release
+android/local.properties
+ios/App/Pods
+ios/App/build
+ios/DerivedData
+test-results

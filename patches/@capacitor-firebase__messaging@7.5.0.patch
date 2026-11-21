@@ -1,0 +1,84 @@
+diff --git a/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/messaging/FirebaseMessagingPlugin.java b/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/messaging/FirebaseMessagingPlugin.java
+index 1c955bb1e07e68896ebd0e9d0a290bbc98db37d8..78708c431a0933b19d01f383e285fabd8f35901c 100644
+--- a/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/messaging/FirebaseMessagingPlugin.java
++++ b/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/messaging/FirebaseMessagingPlugin.java
+@@ -119,7 +119,8 @@ public class FirebaseMessagingPlugin extends Plugin {
+     @PluginMethod
+     public void isSupported(PluginCall call) {
+         JSObject result = new JSObject();
+-        result.put("isSupported", true);
++        // Builds without google-services.json have no Firebase app: push is off.
++        result.put("isSupported", !com.google.firebase.FirebaseApp.getApps(getContext()).isEmpty());
+         call.resolve(result);
+     }
+ 
+diff --git a/ios/Plugin/FirebaseMessagingPlugin.swift b/ios/Plugin/FirebaseMessagingPlugin.swift
+index 001dbd13462e7692db477992a09f03561310bd48..5ca3662e2a7105f5a1ebcbba1ed4121222e1ab64 100644
+--- a/ios/Plugin/FirebaseMessagingPlugin.swift
++++ b/ios/Plugin/FirebaseMessagingPlugin.swift
+@@ -38,7 +38,17 @@ public class FirebaseMessagingPlugin: CAPPlugin, CAPBridgedPlugin {
+     public let errorNotificationsMissing = "notifications must be provided."
+     public let errorNotificationsInvalid = "The provided notifications are invalid."
+ 
++    /// Builds without GoogleService-Info.plist (no Firebase project yet) must not crash:
++    /// the plugin then stays inactive and isSupported answers false.
++    private static var firebaseConfigured: Bool {
++        return FirebaseApp.app() != nil || Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") != nil
++    }
++
+     override public func load() {
++        guard FirebaseMessagingPlugin.firebaseConfigured else {
++            CAPLog.print("[", self.tag, "] GoogleService-Info.plist missing: push notifications are disabled in this build.")
++            return
++        }
+         implementation = FirebaseMessaging(plugin: self, config: firebaseMessagingConfig())
+         NotificationCenter.default.addObserver(self, selector: #selector(self.didRegisterForRemoteNotifications(notification:)), name: .capacitorDidRegisterForRemoteNotifications, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveRemoteNotification(notification:)), name: Notification.Name.init("didReceiveRemoteNotification"), object: nil)
+@@ -49,6 +59,10 @@ public class FirebaseMessagingPlugin: CAPPlugin, CAPBridgedPlugin {
+     }
+ 
+     @objc override public func checkPermissions(_ call: CAPPluginCall) {
++        if implementation == nil {
++            call.resolve(["receive": "denied"])
++            return
++        }
+         implementation?.checkPermissions(completion: { permission in
+             call.resolve([
+                 "receive": permission
+@@ -57,6 +71,10 @@ public class FirebaseMessagingPlugin: CAPPlugin, CAPBridgedPlugin {
+     }
+ 
+     @objc override public func requestPermissions(_ call: CAPPluginCall) {
++        if implementation == nil {
++            call.resolve(["receive": "denied"])
++            return
++        }
+         implementation?.requestPermissions(completion: { granted, error in
+             if let error = error {
+                 CAPLog.print("[", self.tag, "] ", error)
+@@ -69,11 +87,15 @@ public class FirebaseMessagingPlugin: CAPPlugin, CAPBridgedPlugin {
+ 
+     @objc func isSupported(_ call: CAPPluginCall) {
+         var result = JSObject()
+-        result["isSupported"] = true
++        result["isSupported"] = implementation != nil
+         call.resolve(result)
+     }
+ 
+     @objc func getToken(_ call: CAPPluginCall) {
++        if implementation == nil {
++            call.reject("Push notifications are not available in this build.")
++            return
++        }
+         implementation?.getToken(completion: { token, error in
+             if let error = error {
+                 CAPLog.print("[", self.tag, "] ", error)
+@@ -217,7 +239,7 @@ public class FirebaseMessagingPlugin: CAPPlugin, CAPBridgedPlugin {
+     }
+ 
+     @objc private func didRegisterForRemoteNotifications(notification: NSNotification) {
+-        guard let deviceToken = notification.object as? Data else {
++        guard implementation != nil, let deviceToken = notification.object as? Data else {
+             return
+         }
+         Messaging.messaging().apnsToken = deviceToken
