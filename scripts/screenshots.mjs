@@ -85,6 +85,27 @@ async function mockSite(page, lang) {
     if (path === '/api/v1/media' && method === 'POST')
       return send({ ...data.media.items[0], id: 'new-photo', url: '/demo/photo-1.jpg' }, 201);
     if (path === '/api/v1/push/status') return send(data.pushStatus);
+    if (path === '/api/v1/assistants/chat') {
+      const question = JSON.parse(request.postData() ?? '{}').messages?.at(-1)?.content ?? '';
+      const answer = texts(lang).chriss;
+      const lines = [
+        { type: 'tool', name: 'create_entry' },
+        { type: 'tool-done', name: 'create_entry', ok: true },
+        { type: 'text', text: answer },
+        {
+          type: 'done',
+          messages: [
+            { role: 'user', content: question },
+            { role: 'assistant', content: answer },
+          ],
+        },
+      ];
+      return route.fulfill({
+        status: 200,
+        headers: { ...CORS, 'content-type': 'application/x-ndjson' },
+        body: lines.map((l) => JSON.stringify(l)).join('\n') + '\n',
+      });
+    }
     return send({ title: 'Not Found', status: 404 }, 404);
   });
   // The shop's remote switch: the copy in the repository.
@@ -135,6 +156,14 @@ function scenes(lang) {
   const it = lang === 'it';
   return [
     ['home', async () => {}],
+    [
+      'chriss',
+      async (page) => {
+        await page.getByRole('button', { name: it ? 'Chiedi a Chriss' : 'Ask Chriss' }).click();
+        await page.locator('.chat__suggestions button').first().click();
+        await page.locator('.msg--chriss .md').waitFor();
+      },
+    ],
     [
       'write',
       async (page) => {
@@ -220,7 +249,8 @@ try {
     for (const [deviceName, device] of Object.entries(DEVICES)) {
       const list = scenes(lang);
       // Play takes up to 8 phone screenshots.
-      const chosen = device.store === 'android' ? list.filter(([n]) => n !== 'media') : list;
+      const chosen =
+        device.store === 'android' ? list.filter(([n]) => n !== 'media' && n !== 'register') : list;
       for (const [index, [name, act]] of chosen.entries()) {
         const context = await browser.newContext({
           viewport: { width: device.width, height: device.height },

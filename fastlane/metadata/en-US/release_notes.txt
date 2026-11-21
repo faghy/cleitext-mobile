@@ -1,1 +1,1 @@
-First version: write posts with photos, moderate comments, read form messages, follow orders, upload photos, get notifications and discover themes and plugins in the Shop.
+First version: write posts with photos, ask Chriss, your site’s assistant, moderate comments, read form messages, follow orders, upload photos, get notifications and discover themes and plugins in the Shop.

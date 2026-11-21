@@ -70,6 +70,8 @@ const T = {
     shipping: 'Corriere espresso',
     payment: 'Bonifico bancario',
     city: 'Genova',
+    chriss:
+      'Ecco la bozza **«Orari delle feste»**, pronta da rivedere:\n\n- **24 dicembre**: aperti a pranzo, 12–15\n- **25 e 26 dicembre**: chiusi\n- **31 dicembre**: cenone su prenotazione, dalle 20\n- **1 gennaio**: aperti dalle 12:30\n\nL’ho lasciata in bozza, con un invito a prenotare per telefono. [Apri la bozza](https://demo.cleitext.com/cl-admin/entries/demo) o dimmi cosa cambiare.',
     draftTitle: 'Il pescato di stamattina',
     draftText:
       'Oggi al mercato abbiamo trovato **gamberi rossi** e *pesce spada* freschissimi.\n\nA pranzo li trovate così:\n- tartare di gamberi\n- spada alla griglia con capperi\n\nVi aspettiamo!',
@@ -129,6 +131,8 @@ const T = {
     shipping: 'Express courier',
     payment: 'Bank transfer',
     city: 'Bristol',
+    chriss:
+      'Here is the draft **“Holiday opening hours”**, ready to review:\n\n- **24 December**: open for lunch, 12–3 pm\n- **25 and 26 December**: closed\n- **31 December**: New Year’s Eve dinner, booking only, from 8 pm\n- **1 January**: open from 12:30\n\nI left it as a draft, with an invitation to book by phone. [Open the draft](https://demo.cleitext.com/cl-admin/entries/demo) or tell me what to change.',
     draftTitle: 'This morning’s catch',
     draftText:
       'At the market today we found very fresh **red prawns** and *swordfish*.\n\nFor lunch you will find them as:\n- prawn tartare\n- grilled swordfish with capers\n\nSee you soon!',

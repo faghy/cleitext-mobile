@@ -1,1 +1,1 @@
-website,blog,cms,posts,comments,orders,shop,forms,photos,publish,notifications,site manager
+website,blog,cms,posts,comments,orders,shop,forms,photos,assistant,AI,notifications

@@ -2,7 +2,8 @@
 
 The Cleitext app for iOS and Android: your Cleitext sites in your pocket. Write
 posts with photos, moderate comments, read form messages, follow shop orders,
-upload media and get notifications — with native screens over each site's REST
+upload media, ask Chriss (the site's AI assistant, `POST /api/v1/assistants/chat`,
+streamed JSON lines) and get notifications — with native screens over each site's REST
 API. The full admin opens in an in-app browser for everything else. A Shop tab
 lists Cleitext's paid themes and plugins, sold on cleitext.com.
 

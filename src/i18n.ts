@@ -168,6 +168,29 @@ const it = {
   'time.minutes': '{n} min fa',
   'time.hours': '{n} h fa',
   'time.yesterday': 'ieri',
+  'chriss.name': 'Chriss',
+  'chriss.open': 'Chiedi a Chriss',
+  'chriss.new': 'Nuova chat',
+  'chriss.hello':
+    'Ciao! Sono Chriss, l’assistente del tuo sito. Posso scrivere bozze di articoli e pagine, trovare contenuti, aiutarti con i commenti e spiegarti come fare le cose.',
+  'chriss.drafts': 'Quello che scrivo resta in bozza finché non decidi tu.',
+  'chriss.s1': 'Scrivi una bozza sugli orari delle feste',
+  'chriss.s2': 'Quali commenti aspettano una risposta?',
+  'chriss.s3': 'Quali pagine ho aggiornato di recente?',
+  'chriss.placeholder': 'Scrivi a Chriss…',
+  'chriss.send': 'Invia',
+  'chriss.working': 'Chriss ci sta lavorando…',
+  'chriss.copy': 'Copia',
+  'chriss.copied': 'Copiato',
+  'chriss.settings': 'Apri impostazioni di Chriss',
+  'chriss.noProvider':
+    'Chriss non è ancora collegato a un servizio AI su questo sito. Chi gestisce il sito può collegarlo nelle impostazioni di Chriss.',
+  'chriss.quota':
+    'Hai usato le richieste gratuite di oggi: collega il tuo servizio AI per continuare senza limiti',
+  'chriss.quotaReset': 'Le richieste gratuite ripartono {when}.',
+  'chriss.unsupported':
+    'Questo sito non permette ancora la chat dall’app: chi lo gestisce deve aggiornare Cleitext all’ultima versione.',
+  'chriss.forbidden': 'Il tuo account non può usare Chriss su questo sito.',
   'tab.shop': 'Negozio',
   'shop.title': 'Negozio',
   'shop.intro':
@@ -384,6 +407,29 @@ const en: Record<MessageKey, string> = {
   'time.minutes': '{n} min ago',
   'time.hours': '{n} h ago',
   'time.yesterday': 'yesterday',
+  'chriss.name': 'Chriss',
+  'chriss.open': 'Ask Chriss',
+  'chriss.new': 'New chat',
+  'chriss.hello':
+    'Hi! I am Chriss, your site’s assistant. I can write drafts of posts and pages, find content, help with comments and explain how to do things.',
+  'chriss.drafts': 'What I write stays a draft until you decide.',
+  'chriss.s1': 'Write a draft about the holiday opening hours',
+  'chriss.s2': 'Which comments are waiting for a reply?',
+  'chriss.s3': 'Which pages did I update recently?',
+  'chriss.placeholder': 'Write to Chriss…',
+  'chriss.send': 'Send',
+  'chriss.working': 'Chriss is working on it…',
+  'chriss.copy': 'Copy',
+  'chriss.copied': 'Copied',
+  'chriss.settings': 'Open Chriss settings',
+  'chriss.noProvider':
+    'Chriss is not connected to an AI service on this site yet. Whoever runs the site can connect one in Chriss settings.',
+  'chriss.quota':
+    'You have used today’s free requests: connect your own AI service to keep going without limits',
+  'chriss.quotaReset': 'The free requests start again {when}.',
+  'chriss.unsupported':
+    'This site does not allow the chat from the app yet: whoever runs it needs to update Cleitext to the latest version.',
+  'chriss.forbidden': 'Your account cannot use Chriss on this site.',
   'tab.shop': 'Shop',
   'shop.title': 'Shop',
   'shop.intro':

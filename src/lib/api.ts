@@ -40,11 +40,12 @@ type Query = Record<string, string | number | undefined>;
 
 interface RequestOptions {
   query?: Query;
+  accept?: string;
   json?: unknown;
   body?: FormData;
 }
 
-function errorMessage(body: unknown, status: number): string {
+export function errorMessage(body: unknown, status: number): string {
   if (body && typeof body === 'object') {
     const b = body as Record<string, unknown>;
     for (const key of ['detail', 'message', 'error_description', 'error', 'title']) {
@@ -76,11 +77,12 @@ export class ApiClient {
     return new URL(address, this.origin).toString();
   }
 
-  async request<T>(method: string, path: string, options: RequestOptions = {}): Promise<T> {
+  /** The raw answer, with the Bearer token; refreshed and repeated once on 401. */
+  async send(method: string, path: string, options: RequestOptions = {}): Promise<Response> {
     const send = async (token: string) => {
       const headers: Record<string, string> = {
         authorization: `Bearer ${token}`,
-        accept: 'application/json',
+        accept: options.accept ?? 'application/json',
       };
       let body: BodyInit | undefined;
       if (options.json !== undefined) {
@@ -96,6 +98,11 @@ export class ApiClient {
       await this.tokens.refresh();
       response = await send(await this.tokens.accessToken());
     }
+    return response;
+  }
+
+  async request<T>(method: string, path: string, options: RequestOptions = {}): Promise<T> {
+    const response = await this.send(method, path, options);
     if (response.status === 204) return undefined as T;
     const text = await response.text();
     let data: unknown = undefined;

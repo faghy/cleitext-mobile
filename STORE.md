@@ -45,6 +45,10 @@ un server suo. Cosa succede ai dati:
 - **Accesso ai siti**: i token di accesso restano sul telefono, nel portachiavi (Keychain / Android
   Keystore). Contenuti, commenti, messaggi, ordini e foto passano solo tra il telefono e il sito
   dell'utente, cifrati (https). Sono dati che l'utente gestisce sul _suo_ sito.
+- **Chriss** (assistente AI del sito): le domande scritte nella chat vanno solo al sito
+  dell'utente, che le passa al servizio AI collegato dal gestore del sito (o al servizio gratuito
+  «Chriss base»). La conversazione resta in memoria finché l'app è aperta e non viene salvata
+  sul telefono.
 - **Notifiche**: il codice notifiche del telefono (token FCM) viene inviato al sito dell'utente e al
   servizio di inoltro su cleitext.com solo per consegnare gli avvisi (Firebase Cloud Messaging di
   Google li recapita). Nessun altro uso.

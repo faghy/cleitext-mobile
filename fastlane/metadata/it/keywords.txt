@@ -1,1 +1,1 @@
-sito,blog,cms,articoli,commenti,ordini,negozio,moduli,foto,pubblicare,notifiche,siti web,gestione
+sito,blog,cms,articoli,commenti,ordini,negozio,moduli,foto,assistente,AI,notifiche,siti web

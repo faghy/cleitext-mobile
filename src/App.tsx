@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ChrissBubble } from './components/Chriss';
 import { Icon, type IconName } from './components/icons';
 import { Loading, ToastProvider } from './components/ui';
 import { t, type MessageKey } from './i18n';
@@ -29,6 +30,18 @@ const TABS: { id: Tab; icon: IconName; label: MessageKey; needsSite: boolean }[]
 ];
 
 const ROOT: Route = { name: 'root' };
+
+/** Screens of the app itself, not of a site: no Chriss there. */
+const APP_ROUTES = new Set<Route['name']>([
+  'addSite',
+  'sites',
+  'settings',
+  'licenses',
+  'notifications',
+  'product',
+  'account',
+  'register',
+]);
 const emptyStacks = (): Record<Tab, Route[]> => ({
   home: [ROOT],
   write: [ROOT],
@@ -171,12 +184,19 @@ export function App() {
     }
   })();
 
+  // Chriss on the screens of a site (needs the right to write).
+  const chriss =
+    site !== null &&
+    site.capabilities.includes('edit_entries') &&
+    tab !== 'shop' &&
+    !APP_ROUTES.has(route.name);
+
   const tabs = TABS.filter((item) => !item.needsSite || sites.length > 0);
   return (
     <ShopContext.Provider value={shop}>
       <NavContext.Provider value={nav}>
         <ToastProvider>
-          <div className="app">
+          <div className={`app${chriss ? ' app--chriss' : ''}`}>
             <main className="app__main" key={`${tab}:${stack.length}`}>
               {screen}
             </main>
@@ -193,6 +213,7 @@ export function App() {
                 </button>
               ))}
             </nav>
+            {chriss && site && <ChrissBubble key={site.id} site={site} />}
           </div>
         </ToastProvider>
       </NavContext.Provider>
