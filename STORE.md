@@ -22,6 +22,15 @@ La scheda App Store (testi, URL, categorie, screenshot, classificazione, note pe
 si carica con il workflow **iOS store listing** (`ios-metadata.yml`, avvio manuale): non carica
 binari e non invia alla revisione.
 
+Cosa resta da fare a mano in App Store Connect dopo il workflow:
+
+- **Privacy dell'app** (questionario «Dati raccolti», §3): non esiste nell'API, va compilato a mano.
+- **Informazioni per la revisione**: Apple chiede un telefono di contatto. Aggiungere il segreto
+  `APP_REVIEW_CONTACT_PHONE` e rilanciare il workflow (carica nome, email `site@cleitext.com` e
+  note), oppure compilarle a mano; utente e password del sito demo si incollano solo lì.
+- **Diritti sui contenuti** (Content Rights), **Conformità all'esportazione** se richiesta, e la
+  scelta della **build** per la versione 1.0.0.
+
 Testi e immagini: `fastlane/metadata/` (Android `android/it-IT`, `android/en-US`; iOS `it`, `en-US`),
 screenshot iPhone in `fastlane/screenshots/<lingua>/` (6,9" 1320×2868 e 6,5" 1284×2778),
 screenshot Android, icona 512×512 e immagine in evidenza 1024×500 in

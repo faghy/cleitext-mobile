@@ -116,5 +116,13 @@ platform :ios do
       })
       UI.success("Available in #{territories.size} territories.")
     end
+
+    # What App Store Connect holds now, for the log.
+    info = call.call(:get, "/v1/apps/#{app_id}/appInfos?include=primaryCategory,secondaryCategory")[1]
+    info['data'].each do |item|
+      primary = item.dig('relationships', 'primaryCategory', 'data', 'id')
+      secondary = item.dig('relationships', 'secondaryCategory', 'data', 'id')
+      UI.message("App info #{item.dig('attributes', 'state') || item.dig('attributes', 'appStoreState')}: categories #{primary} / #{secondary}, age rating #{item.dig('attributes', 'appStoreAgeRating')}")
+    end
   end
 end
