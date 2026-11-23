@@ -22,9 +22,9 @@ MANY SITES, ONE APP
 Switch between your sites with a tap. For everything else there is "Open the full admin".
 
 THEMES AND PLUGINS FOR YOUR SITE
-The Shop section lists Cleitext's paid themes and plugins with clear prices. The purchase is completed on cleitext.com and the licence is used on your website. You can also create your Cleitext account.
+The Shop section lists Cleitext's paid themes and plugins with clear prices. The purchase is completed on cleitext.com and the license is used on your website.
 
 RESPECT FOR YOUR DATA
-No ads, no tracking. The app talks only to the sites you add; your sign-in is stored securely on the phone and you can remove it at any time.
+No ads, no tracking. The app talks to the sites you add and, for the Shop and notifications, to cleitext.com; your sign-in is stored securely on the phone and you can remove it at any time.
 
 Cleitext is an open-source CMS, and this app is free software too.

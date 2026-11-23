@@ -22,9 +22,9 @@ PIÙ SITI, UN'APP
 Passi da un sito all'altro con un tocco. Per tutto il resto c'è «Apri amministrazione completa».
 
 TEMI E PLUGIN PER IL TUO SITO
-Nella sezione Negozio trovi i temi e i plugin a pagamento di Cleitext, con prezzi chiari. L'acquisto si completa su cleitext.com e la licenza si usa sul tuo sito web. Puoi anche creare il tuo account Cleitext.
+Nella sezione Negozio trovi i temi e i plugin a pagamento di Cleitext, con prezzi chiari. L'acquisto si completa su cleitext.com e la licenza si usa sul tuo sito web.
 
 RISPETTO PER I TUOI DATI
-Nessuna pubblicità, nessun tracciamento. L'app parla solo con i siti che aggiungi; l'accesso resta salvato in modo sicuro sul telefono e lo togli quando vuoi.
+Nessuna pubblicità, nessun tracciamento. L'app parla con i siti che aggiungi e, per Negozio e notifiche, con cleitext.com; l'accesso resta salvato in modo sicuro sul telefono e lo togli quando vuoi.
 
 Cleitext è un CMS open source, e anche questa app è software libero.

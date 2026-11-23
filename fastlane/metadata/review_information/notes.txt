@@ -6,7 +6,7 @@ Cleitext is an app for people who run websites made with Cleitext, an open-sourc
 4. You are back in the app with the site's dashboard: comments to approve, form messages, shop orders, Write (posts with photos), Media and Chriss, the site's assistant (round button at the bottom right).
 
 SHOP TAB
-The Shop tab lists licences for Cleitext website themes and plugins. They are software licences installed and used on the customer's own website (a service consumed outside the app); nothing in the app is unlocked or changed by a purchase. Checkout happens on cleitext.com in the browser. Creating a Cleitext account is optional; the account can be deleted from the app (More > Cleitext account > Delete account).
+The Shop tab lists licenses for Cleitext website themes and plugins. They are software licenses installed and used on the customer's own website (a service consumed outside the app); nothing in the app is unlocked or changed by a purchase. Checkout happens on cleitext.com in the browser. Creating a Cleitext account is optional; the account can be deleted from the app (More > Cleitext account > Delete account).
 
 NOTIFICATIONS AND DATA
 Notifications are sent by the user's own site. The app has no analytics, ads or tracking.
